@@ -14,11 +14,11 @@ export function CompareTable({ products, onRemove }: CompareTableProps) {
   if (products.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="w-16 h-16 rounded-[16px] bg-apple-gray-50 flex items-center justify-center mb-4">
-          <X size={24} className="text-apple-gray-300" />
+        <div className="w-16 h-16 rounded-[16px] bg-ink-50 flex items-center justify-center mb-4">
+          <X size={24} className="text-ink-300" />
         </div>
-        <p className="text-base font-medium text-apple-gray-900 mb-1">No products to compare</p>
-        <p className="text-sm text-apple-gray-400">Add products from the product page to compare them side by side</p>
+        <p className="text-base font-medium text-ink-900 mb-1">No products to compare</p>
+        <p className="text-sm text-ink-400">Add products from the product page to compare them side by side</p>
       </div>
     );
   }
@@ -35,18 +35,18 @@ export function CompareTable({ products, onRemove }: CompareTableProps) {
             <div key={product.id} className="text-center relative">
               <button
                 onClick={() => onRemove(product.id)}
-                className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-white border border-apple-gray-200 flex items-center justify-center hover:bg-apple-gray-50 apple-transition z-10"
+                className="absolute -top-2 -right-2 w-7 h-7 rounded-full bg-white border border-ink-200 flex items-center justify-center hover:bg-ink-50 transition-smooth z-10"
               >
-                <X size={14} className="text-apple-gray-400" />
+                <X size={14} className="text-ink-400" />
               </button>
-              <div className="aspect-square rounded-[16px] bg-apple-gray-50 overflow-hidden mb-4">
+              <div className="aspect-square rounded-[16px] bg-ink-50 overflow-hidden mb-4">
                 <img src={product.images[0]} alt="" className="w-full h-full object-cover" />
               </div>
-              <h4 className="text-sm font-medium text-apple-gray-900 mb-2 line-clamp-2">{product.name}</h4>
-              <p className="text-lg font-bold text-apple-gray-900 mb-2">{formatPrice(product.price)}</p>
+              <h4 className="text-sm font-medium text-ink-900 mb-2 line-clamp-2">{product.name}</h4>
+              <p className="text-lg font-bold text-ink-900 mb-2">{formatPrice(product.price)}</p>
               <div className="flex items-center justify-center gap-1 mb-3">
                 <Star size={12} className="fill-amber-400 text-amber-400" />
-                <span className="text-xs text-apple-gray-500">{product.rating}</span>
+                <span className="text-xs text-ink-500">{product.rating}</span>
               </div>
               <Badge variant={product.inStock ? 'success' : 'danger'} size="sm">
                 {product.inStock ? 'In Stock' : 'Out of Stock'}
@@ -56,20 +56,20 @@ export function CompareTable({ products, onRemove }: CompareTableProps) {
         </div>
 
         <div className="mt-8">
-          <h4 className="text-sm font-semibold text-apple-gray-900 mb-4">Specifications</h4>
+          <h4 className="text-sm font-semibold text-ink-900 mb-4">Specifications</h4>
           <div className="space-y-1">
             {allSpecs.map((specLabel) => (
               <div
                 key={specLabel}
-                className="grid gap-4 py-3 px-4 rounded-[12px] even:bg-apple-gray-50"
+                className="grid gap-4 py-3 px-4 rounded-[12px] even:bg-ink-50"
                 style={{ gridTemplateColumns: `200px repeat(${products.length}, 1fr)` }}
               >
-                <span className="text-sm text-apple-gray-500 sticky left-0 bg-inherit">{specLabel}</span>
+                <span className="text-sm text-ink-500 sticky left-0 bg-inherit">{specLabel}</span>
                 {products.map((product) => {
                   const spec = product.specifications.find((s) => s.label === specLabel);
                   return (
-                    <span key={product.id} className="text-sm font-medium text-apple-gray-900 text-center">
-                      {spec?.value || <Minus size={14} className="text-apple-gray-300 mx-auto" />}
+                    <span key={product.id} className="text-sm font-medium text-ink-900 text-center">
+                      {spec?.value || <Minus size={14} className="text-ink-300 mx-auto" />}
                     </span>
                   );
                 })}
@@ -79,21 +79,21 @@ export function CompareTable({ products, onRemove }: CompareTableProps) {
         </div>
 
         <div className="mt-8">
-          <h4 className="text-sm font-semibold text-apple-gray-900 mb-4">Certifications</h4>
+          <h4 className="text-sm font-semibold text-ink-900 mb-4">Certifications</h4>
           <div className="space-y-1">
             {Array.from(new Set(products.flatMap((p) => p.certifications))).map((cert) => (
               <div
                 key={cert}
-                className="grid gap-4 py-3 px-4 rounded-[12px] even:bg-apple-gray-50"
+                className="grid gap-4 py-3 px-4 rounded-[12px] even:bg-ink-50"
                 style={{ gridTemplateColumns: `200px repeat(${products.length}, 1fr)` }}
               >
-                <span className="text-sm text-apple-gray-500 sticky left-0 bg-inherit">{cert}</span>
+                <span className="text-sm text-ink-500 sticky left-0 bg-inherit">{cert}</span>
                 {products.map((product) => (
                   <span key={product.id} className="text-center">
                     {product.certifications.includes(cert) ? (
                       <Check size={16} className="text-emerald-500 mx-auto" />
                     ) : (
-                      <Minus size={14} className="text-apple-gray-300 mx-auto" />
+                      <Minus size={14} className="text-ink-300 mx-auto" />
                     )}
                   </span>
                 ))}

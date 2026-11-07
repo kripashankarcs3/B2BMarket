@@ -1,7 +1,9 @@
 export { Hero } from './Hero';
-export { Categories } from './Categories';
-export { FeaturedProducts } from './FeaturedProducts';
+export { FeatureBar } from './FeatureBar';
+export { CategoryTiles } from './CategoryTiles';
+export { TopProducts } from './TopProducts';
+export { WhyUs } from './WhyUs';
+export { ClusterStrip } from './ClusterStrip';
+export { HowItWorks } from './HowItWorks';
 export { FeaturedSuppliers } from './FeaturedSuppliers';
-export { TrustIndicators } from './TrustIndicators';
-export { StatsSection } from './StatsSection';
 export { CTASection } from './CTASection';

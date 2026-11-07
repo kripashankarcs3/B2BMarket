@@ -37,9 +37,9 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-20 px-4 bg-gradient-to-b from-apple-gray-50 to-white">
+    <div className="min-h-screen flex items-center justify-center py-20 px-4 bg-gradient-to-b from-ink-50 to-white">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-apple-blue/5 to-transparent blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-gradient-to-br from-brand-600/5 to-transparent blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-emerald-400/5 to-transparent blur-3xl" />
       </div>
 
@@ -49,27 +49,27 @@ export default function RegisterPage() {
         transition={{ duration: 0.5 }}
         className="relative w-full max-w-md"
       >
-        <div className="bg-white rounded-[24px] ios-shadow-xl border border-apple-gray-100 p-8 sm:p-10">
+        <div className="bg-white rounded-[24px] elev-xl border border-ink-100 p-8 sm:p-10">
           <div className="text-center mb-8">
             <Link href="/" className="inline-flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 rounded-[10px] bg-apple-blue flex items-center justify-center">
+              <div className="w-10 h-10 rounded-[10px] bg-brand-600 flex items-center justify-center">
                 <span className="text-white font-bold text-lg">B</span>
               </div>
             </Link>
-            <h1 className="text-2xl font-bold text-apple-gray-900">Create your account</h1>
-            <p className="text-sm text-apple-gray-400 mt-1">Join millions of businesses on B2BMarket</p>
+            <h1 className="text-2xl font-bold text-ink-900">Create your account</h1>
+            <p className="text-sm text-ink-400 mt-1">Join millions of businesses on B2BMarket</p>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 mb-6 p-1 bg-apple-gray-50 rounded-[12px]">
+          <div className="grid grid-cols-2 gap-2 mb-6 p-1 bg-ink-50 rounded-[12px]">
             <button
               onClick={() => setFormData((prev) => ({ ...prev, accountType: 'buyer' }))}
-              className={`py-2.5 px-4 text-sm font-medium rounded-[10px] apple-transition ${formData.accountType === 'buyer' ? 'bg-white text-apple-gray-900 ios-shadow-sm' : 'text-apple-gray-500 hover:text-apple-gray-700'}`}
+              className={`py-2.5 px-4 text-sm font-medium rounded-[10px] transition-smooth ${formData.accountType === 'buyer' ? 'bg-white text-ink-900 elev-sm' : 'text-ink-500 hover:text-ink-700'}`}
             >
               I&apos;m a Buyer
             </button>
             <button
               onClick={() => setFormData((prev) => ({ ...prev, accountType: 'supplier' }))}
-              className={`py-2.5 px-4 text-sm font-medium rounded-[10px] apple-transition ${formData.accountType === 'supplier' ? 'bg-white text-apple-gray-900 ios-shadow-sm' : 'text-apple-gray-500 hover:text-apple-gray-700'}`}
+              className={`py-2.5 px-4 text-sm font-medium rounded-[10px] transition-smooth ${formData.accountType === 'supplier' ? 'bg-white text-ink-900 elev-sm' : 'text-ink-500 hover:text-ink-700'}`}
             >
               I&apos;m a Supplier
             </button>
@@ -121,7 +121,7 @@ export default function RegisterPage() {
               onChange={(e) => setFormData((prev) => ({ ...prev, password: e.target.value }))}
               rightElement={
                 <button type="button" onClick={() => setShowPassword(!showPassword)} className="p-1">
-                  {showPassword ? <EyeOff size={16} className="text-apple-gray-400" /> : <Eye size={16} className="text-apple-gray-400" />}
+                  {showPassword ? <EyeOff size={16} className="text-ink-400" /> : <Eye size={16} className="text-ink-400" />}
                 </button>
               }
               required
@@ -133,16 +133,16 @@ export default function RegisterPage() {
             </Button>
           </form>
 
-          <p className="text-center text-xs text-apple-gray-400 mt-4">
+          <p className="text-center text-xs text-ink-400 mt-4">
             By creating an account, you agree to our{' '}
-            <a href="#" className="text-apple-blue hover:underline">Terms of Service</a>
+            <a href="#" className="text-brand-600 hover:underline">Terms of Service</a>
             {' '}and{' '}
-            <a href="#" className="text-apple-blue hover:underline">Privacy Policy</a>
+            <a href="#" className="text-brand-600 hover:underline">Privacy Policy</a>
           </p>
 
-          <p className="text-center text-sm text-apple-gray-400 mt-6">
+          <p className="text-center text-sm text-ink-400 mt-6">
             Already have an account?{' '}
-            <Link href="/auth/login" className="text-apple-blue font-medium hover:text-apple-blue-dark">
+            <Link href="/auth/login" className="text-brand-600 font-medium hover:text-brand-700">
               Sign in
             </Link>
           </p>

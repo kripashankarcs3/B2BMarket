@@ -9,7 +9,6 @@ export async function GET(
 ) {
   try {
     const { id } = await params;
-    console.log('🔍 [API /api/products/[id]] id from params:', JSON.stringify(id), 'type:', typeof id);
 
     const product = await prisma.product.findUnique({
       where: { id },
@@ -23,10 +22,7 @@ export async function GET(
       },
     });
 
-    console.log('🔍 [API /api/products/[id]] findUnique result:', product?.id ?? 'NULL', 'isActive:', product?.isActive);
-
     if (!product || !product.isActive) {
-      console.log('🔍 [API /api/products/[id]] NOT FOUND for id:', id);
       return notFound('Product not found');
     }
 

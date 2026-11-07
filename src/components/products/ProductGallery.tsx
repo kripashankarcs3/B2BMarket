@@ -30,7 +30,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
   return (
     <div className="space-y-4">
       <div
-        className="relative aspect-square rounded-[20px] bg-apple-gray-50 overflow-hidden cursor-crosshair group"
+        className="relative aspect-square rounded-[20px] bg-ink-50 overflow-hidden cursor-crosshair group"
         onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsZoomed(true)}
         onMouseLeave={() => setIsZoomed(false)}
@@ -40,7 +40,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             key={activeIndex}
             src={imgError[activeIndex] ? `https://placehold.co/800x800/e8e8ed/86868b?text=${productName[0]}` : images[activeIndex]}
             alt={`${productName} - Image ${activeIndex + 1}`}
-            className={cn('w-full h-full object-cover apple-transition', isZoomed && 'scale-150')}
+            className={cn('w-full h-full object-cover transition-smooth', isZoomed && 'scale-150')}
             style={isZoomed ? { transformOrigin: `${zoomPos.x}% ${zoomPos.y}%` } : undefined}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -54,21 +54,21 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
           <>
             <button
               onClick={prev}
-              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 apple-transition hover:bg-white"
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-smooth hover:bg-white"
             >
-              <ChevronLeft size={18} className="text-apple-gray-600" />
+              <ChevronLeft size={18} className="text-ink-600" />
             </button>
             <button
               onClick={next}
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 apple-transition hover:bg-white"
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-smooth hover:bg-white"
             >
-              <ChevronRight size={18} className="text-apple-gray-600" />
+              <ChevronRight size={18} className="text-ink-600" />
             </button>
           </>
         )}
 
-        <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 apple-transition hover:bg-white">
-          <Maximize2 size={14} className="text-apple-gray-600" />
+        <button className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-smooth hover:bg-white">
+          <Maximize2 size={14} className="text-ink-600" />
         </button>
 
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5">
@@ -77,7 +77,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
               key={i}
               onClick={() => setActiveIndex(i)}
               className={cn(
-                'w-1.5 h-1.5 rounded-full apple-transition',
+                'w-1.5 h-1.5 rounded-full transition-smooth',
                 i === activeIndex ? 'bg-white w-4' : 'bg-white/50 hover:bg-white/70'
               )}
             />
@@ -91,8 +91,8 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             key={i}
             onClick={() => setActiveIndex(i)}
             className={cn(
-              'w-16 h-16 sm:w-20 sm:h-20 rounded-[12px] overflow-hidden border-2 apple-transition shrink-0',
-              i === activeIndex ? 'border-apple-blue' : 'border-transparent hover:border-apple-gray-200'
+              'w-16 h-16 sm:w-20 sm:h-20 rounded-[12px] overflow-hidden border-2 transition-smooth shrink-0',
+              i === activeIndex ? 'border-brand-600' : 'border-transparent hover:border-ink-200'
             )}
           >
             <img

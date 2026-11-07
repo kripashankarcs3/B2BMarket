@@ -48,31 +48,34 @@ const Modal = ({ isOpen, onClose, children, title, size = 'md', className }: Mod
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-black/30 backdrop-blur-sm"
+            className="absolute inset-0 bg-ink-900/40 backdrop-blur-[2px]"
             onClick={onClose}
           />
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label={title}
             initial={{ opacity: 0, scale: 0.95, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className={cn(
-              'relative w-full bg-white rounded-[20px] ios-shadow-xl max-h-[85vh] overflow-y-auto',
+              'relative w-full bg-white rounded-xl elev-xl max-h-[85vh] overflow-y-auto',
               sizeClasses[size],
               className
             )}
           >
             {title && (
-              <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-apple-gray-100">
-                <h2 className="text-lg font-semibold text-apple-gray-900">{title}</h2>
-                <button onClick={onClose} className="p-1.5 rounded-full hover:bg-apple-gray-50 apple-transition">
-                  <X size={20} className="text-apple-gray-400" />
+              <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-ink-100">
+                <h2 className="text-lg font-semibold text-ink-900">{title}</h2>
+                <button onClick={onClose} aria-label="Close" className="p-1.5 rounded-full hover:bg-ink-50 transition-smooth">
+                  <X size={20} className="text-ink-400" />
                 </button>
               </div>
             )}
             {!title && (
-              <button onClick={onClose} className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-apple-gray-50 apple-transition z-10">
-                <X size={20} className="text-apple-gray-400" />
+              <button onClick={onClose} aria-label="Close" className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-ink-50 transition-smooth z-10">
+                <X size={20} className="text-ink-400" />
               </button>
             )}
             <div className={cn(!title && 'pt-2')}>{children}</div>

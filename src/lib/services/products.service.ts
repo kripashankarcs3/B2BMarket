@@ -41,9 +41,7 @@ export const productsService = {
   },
 
   async getById(id: string): Promise<Product> {
-    console.log('🔍 [productsService.getById] calling with id:', JSON.stringify(id));
     const response = await api.get<ApiResponse<Product>>(`/api/products/${id}`);
-    console.log('🔍 [productsService.getById] response.data:', JSON.stringify(response.data).slice(0, 200));
     return response.data;
   },
 

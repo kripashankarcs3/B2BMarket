@@ -1,128 +1,68 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { Search, Shield, Truck, HeadphonesIcon } from 'lucide-react';
 import Link from 'next/link';
+import { Search, ShieldCheck } from 'lucide-react';
+import { Container } from '@/components/ui';
+import { HeroSlider, type HeroImage } from './HeroSlider';
 
-const stats = [
-  { value: '12M+', label: 'Products' },
-  { value: '200K+', label: 'Suppliers' },
-  { value: '190+', label: 'Countries' },
-  { value: '98%', label: 'Satisfaction' },
-];
+const POPULAR_SEARCHES = ['PVC Pipe', 'LED Bulb', 'Car Battery', 'Cotton Fabric', 'Spices'];
 
-const features = [
-  { icon: Shield, label: 'Verified Suppliers', desc: 'Trade assurance protection' },
-  { icon: Truck, label: 'Global Shipping', desc: 'Door-to-door delivery' },
-  { icon: HeadphonesIcon, label: '24/7 Support', desc: 'Multi-language support' },
+// Photos from Wikimedia Commons; authors and licences are listed in public/hero/credits.json.
+const HERO_IMAGES: HeroImage[] = [
+  { src: '/hero/container-terminal.jpg', alt: 'Container terminal with stacked shipping containers and freight trucks' },
+  { src: '/hero/factory-floor.jpg', alt: 'Worker handling aluminium profiles on a factory line' },
+  { src: '/hero/port-cranes.jpg', alt: 'Cargo barge moored beside container cranes at a port' },
+  { src: '/hero/cutting-machine.jpg', alt: 'Automated cutting machine on a factory production line' },
 ];
 
 export function Hero() {
   return (
-    <section className="relative min-h-[85vh] sm:min-h-[90vh] flex items-center bg-gradient-to-b from-apple-gray-50 to-white overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-gradient-to-br from-apple-blue/5 to-transparent blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-gradient-to-tr from-emerald-400/5 to-transparent blur-3xl" />
-      </div>
+    <section className="relative overflow-hidden bg-[linear-gradient(180deg,#e7eefb_0%,#f3f7fd_100%)] pt-16">
+      <Container className="relative z-10 pb-8 pt-10 sm:pt-12 lg:pb-28 lg:pt-14">
+        <div className="max-w-[34rem]">
+          <p className="inline-flex items-center gap-2 rounded-full bg-brand-100/80 px-3.5 py-1.5 text-sm font-medium text-brand-800">
+            <ShieldCheck size={16} aria-hidden />
+            India&apos;s B2B sourcing platform
+          </p>
 
-      <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 w-full pt-24 sm:pt-28 pb-16 sm:pb-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.25, 0.1, 0.25, 1] }}
-          >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-apple-blue-light rounded-full text-xs font-medium text-apple-blue mb-6">
-              <span className="w-1.5 h-1.5 rounded-full bg-apple-blue animate-pulse" />
-              Trusted by 200,000+ businesses worldwide
-            </div>
+          <h1 className="mt-5 text-[2.4rem] font-semibold leading-[1.1] text-brand-900 sm:text-5xl lg:text-[3.3rem]">
+            Wholesale Sourcing Made Simple
+          </h1>
+          <p className="mt-4 max-w-[44ch] text-lg leading-relaxed text-ink-600">
+            Connect with verified Indian manufacturers, compare prices, and buy in bulk with GST invoice.
+          </p>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-apple-gray-900 leading-[1.1] mb-6 text-balance">
-              Source Premium
-              <span className="block text-apple-blue mt-2">B2B Products</span>
-              with Confidence
-            </h1>
-
-            <p className="text-lg sm:text-xl text-apple-gray-400 leading-relaxed mb-8 max-w-lg text-balance">
-              Connect with verified suppliers worldwide. Access millions of products with AI-powered search, trade assurance, and seamless logistics.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-3 mb-10">
-              <Link
-                href="/products"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-apple-blue text-white rounded-[16px] font-medium text-base hover:bg-apple-blue-dark apple-transition ios-shadow"
-              >
-                <Search size={20} />
-                Explore Products
-              </Link>
-              <Link
-                href="/auth/register"
-                className="inline-flex items-center justify-center px-8 py-4 bg-white border border-apple-gray-200 text-apple-gray-900 rounded-[16px] font-medium text-base hover:bg-apple-gray-50 apple-transition"
-              >
-                Start Selling
-              </Link>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-6 sm:gap-8">
-              {stats.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
-                  className="text-center sm:text-left"
-                >
-                  <p className="text-2xl sm:text-3xl font-bold text-apple-gray-900">{stat.value}</p>
-                  <p className="text-xs sm:text-sm text-apple-gray-400">{stat.label}</p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="hidden lg:block relative"
-          >
-            <div className="relative aspect-[4/3] rounded-[24px] overflow-hidden ios-shadow-xl bg-gradient-to-br from-apple-gray-50 to-white border border-apple-gray-100">
-              <img
-                src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=800&q=80"
-                alt="B2B Marketplace"
-                className="w-full h-full object-cover opacity-90"
+          <form action="/products" method="get" role="search" className="mt-7">
+            <label htmlFor="hero-search" className="sr-only">Search products</label>
+            <div className="flex items-center gap-2 rounded-xl border border-ink-200 bg-white p-1.5 shadow-[0_6px_24px_rgba(36,51,138,0.08)] focus-within:border-brand-500 focus-within:ring-4 focus-within:ring-brand-600/10">
+              <Search size={20} aria-hidden className="ml-3 shrink-0 text-ink-400" />
+              <input
+                id="hero-search"
+                name="q"
+                type="search"
+                placeholder="Search products, e.g. PVC Pipe, LED Bulb"
+                className="h-12 min-w-0 flex-1 bg-transparent text-[15px] text-ink-900 placeholder:text-ink-400 outline-none"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+              <button type="submit" className="h-12 rounded-lg bg-brand-700 px-6 text-[15px] font-semibold text-white hover:bg-brand-800 sm:px-8">
+                Search
+              </button>
+            </div>
+          </form>
 
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  {features.map((feat, i) => {
-                    const Icon = feat.icon;
-                    return (
-                      <div key={i} className="flex items-center gap-2 px-3 py-2 bg-white/90 backdrop-blur-md rounded-[12px] shadow-sm">
-                        <Icon size={16} className="text-apple-blue" />
-                        <span className="text-xs font-medium text-apple-gray-700">{feat.label}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            <div className="absolute -bottom-6 -left-6 w-24 h-24 rounded-[20px] bg-white ios-shadow-lg flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-emerald-500">98%</p>
-                <p className="text-[10px] text-apple-gray-400">On-time</p>
-              </div>
-            </div>
-            <div className="absolute -top-6 -right-6 w-28 h-28 rounded-[20px] bg-white ios-shadow-lg flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-2xl font-bold text-apple-blue">24/7</p>
-                <p className="text-[10px] text-apple-gray-400">Support</p>
-              </div>
-            </div>
-          </motion.div>
+          <div className="mt-5 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm">
+            <span className="mr-1 font-semibold text-ink-900">Popular:</span>
+            {POPULAR_SEARCHES.map((term) => (
+              <Link
+                key={term}
+                href={`/products?q=${encodeURIComponent(term)}`}
+                className="rounded-full border border-ink-200 bg-white/70 px-3.5 py-1.5 text-ink-700 hover:border-brand-500 hover:text-brand-700"
+              >
+                {term}
+              </Link>
+            ))}
+          </div>
         </div>
-      </div>
+      </Container>
+
+      <HeroSlider images={HERO_IMAGES} />
     </section>
   );
 }

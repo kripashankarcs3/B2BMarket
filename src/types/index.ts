@@ -31,6 +31,13 @@ export interface Category {
   image: string;
   productCount: number;
   icon: string;
+  description?: string | null;
+  parentId?: string | null;
+}
+
+export interface CategoryNode extends Category {
+  children: Category[];
+  totalProducts: number;
 }
 
 export interface Supplier {

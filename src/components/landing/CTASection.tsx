@@ -1,59 +1,41 @@
-'use client';
+import { Check } from 'lucide-react';
+import { ButtonLink, Container } from '@/components/ui';
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { ArrowRight, Sparkles } from 'lucide-react';
+const points = [
+  'List your catalogue free, with bulk price slabs',
+  'Get enquiries from buyers across India',
+  'Get paid on dispatch, with GST invoicing built in',
+];
 
 export function CTASection() {
   return (
-    <section className="py-20 sm:py-32 bg-white overflow-hidden">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="relative rounded-[24px] sm:rounded-[32px] bg-gradient-to-br from-apple-gray-900 via-apple-gray-800 to-apple-gray-900 p-8 sm:p-16 lg:p-20 overflow-hidden"
-        >
-          <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-apple-blue/10 to-transparent rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-emerald-500/10 to-transparent rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
-
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
-            <div className="text-center lg:text-left">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className="inline-flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-full text-xs font-medium text-white/80 mb-4"
-              >
-                <Sparkles size={14} className="text-apple-blue" />
-                Start your journey today
-              </motion.div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4 text-balance">
-                Ready to Transform Your Supply Chain?
-              </h2>
-              <p className="text-base sm:text-lg text-white/60 max-w-xl text-balance">
-                Join millions of businesses already sourcing smarter with B2BMarket. Create your free account in minutes.
-              </p>
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-              <Link
-                href="/auth/register"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-apple-blue text-white rounded-[16px] font-medium text-base hover:bg-apple-blue-dark apple-transition ios-shadow"
-              >
-                Get Started Free
-                <ArrowRight size={18} />
-              </Link>
-              <Link
-                href="/products"
-                className="inline-flex items-center justify-center px-8 py-4 bg-white/10 text-white border border-white/20 rounded-[16px] font-medium text-base hover:bg-white/20 apple-transition"
-              >
-                Browse Products
-              </Link>
-            </div>
+    <section className="py-16 sm:py-20 bg-white">
+      <Container>
+        <div className="rounded-xl bg-brand-700 px-6 py-10 sm:px-10 sm:py-12 lg:px-14 grid lg:grid-cols-[1.3fr_1fr] gap-8 lg:gap-12 items-center">
+          <div>
+            <h2 className="font-display text-3xl sm:text-4xl font-semibold text-white leading-tight text-balance">
+              Manufacture or trade? Sell to businesses across India.
+            </h2>
+            <ul className="mt-6 space-y-2.5">
+              {points.map((point) => (
+                <li key={point} className="flex items-start gap-2.5 text-[15px] text-brand-100">
+                  <Check size={18} aria-hidden className="mt-0.5 shrink-0 text-accent-500" />
+                  {point}
+                </li>
+              ))}
+            </ul>
           </div>
-        </motion.div>
-      </div>
+          <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-3 lg:items-start xl:justify-end">
+            <ButtonLink href="/auth/register" variant="inverse" size="lg">Start selling</ButtonLink>
+            <a
+              href="mailto:hello@b2bmarket.com?subject=Selling%20on%20B2BMarket"
+              className="inline-flex h-12 items-center justify-center px-5 rounded-md border border-white/30 text-[15px] font-medium text-white hover:bg-white/10 transition-smooth"
+            >
+              Talk to our seller team
+            </a>
+          </div>
+        </div>
+      </Container>
     </section>
   );
 }

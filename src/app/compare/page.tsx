@@ -19,11 +19,11 @@ export default function ComparePage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center py-20"
           >
-            <div className="w-16 h-16 rounded-full bg-apple-gray-50 flex items-center justify-center mx-auto mb-4">
-              <BarChart3 size={28} className="text-apple-gray-300" />
+            <div className="w-16 h-16 rounded-full bg-ink-50 flex items-center justify-center mx-auto mb-4">
+              <BarChart3 size={28} className="text-ink-300" />
             </div>
-            <h2 className="text-xl font-semibold text-apple-gray-900 mb-2">Nothing to compare</h2>
-            <p className="text-sm text-apple-gray-400 mb-6">Add products to compare their specifications side by side.</p>
+            <h2 className="text-xl font-semibold text-ink-900 mb-2">Nothing to compare</h2>
+            <p className="text-sm text-ink-400 mb-6">Add products to compare their specifications side by side.</p>
             <Link href="/products">
               <Button>Browse Products</Button>
             </Link>
@@ -41,8 +41,8 @@ export default function ComparePage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <h1 className="text-3xl sm:text-4xl font-bold text-apple-gray-900">Compare Products</h1>
-          <p className="text-sm text-apple-gray-400 mt-1">{items.length} products selected</p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-ink-900">Compare Products</h1>
+          <p className="text-sm text-ink-400 mt-1">{items.length} products selected</p>
         </motion.div>
 
         <CompareTable products={items} onRemove={removeItem} />

@@ -24,8 +24,8 @@ export function ProductInfo({ product }: ProductInfoProps) {
             <Badge variant="info" size="sm">{product.category.name}</Badge>
             {product.supplier.verified && <Badge variant="success" size="sm"><Shield size={10} /> Verified</Badge>}
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-apple-gray-900 leading-tight">{product.name}</h1>
-          <p className="text-sm text-apple-gray-400 mt-1">by {product.supplier.name}</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-ink-900 leading-tight">{product.name}</h1>
+          <p className="text-sm text-ink-400 mt-1">by {product.supplier.name}</p>
         </div>
       </div>
 
@@ -33,60 +33,60 @@ export function ProductInfo({ product }: ProductInfoProps) {
         <div className="flex items-center gap-1.5">
           <div className="flex items-center gap-0.5">
             {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} size={16} className={i < Math.floor(product.rating) ? 'fill-amber-400 text-amber-400' : 'fill-apple-gray-100 text-apple-gray-100'} />
+              <Star key={i} size={16} className={i < Math.floor(product.rating) ? 'fill-amber-400 text-amber-400' : 'fill-ink-100 text-ink-100'} />
             ))}
           </div>
-          <span className="text-sm font-medium text-apple-gray-700">{product.rating}</span>
-          <span className="text-sm text-apple-gray-400">({product.reviewCount} reviews)</span>
+          <span className="text-sm font-medium text-ink-700">{product.rating}</span>
+          <span className="text-sm text-ink-400">({product.reviewCount} reviews)</span>
         </div>
-        <span className="text-apple-gray-200">·</span>
-        <span className="text-sm text-apple-gray-400">{product.moq}+ {product.unit} (MOQ)</span>
+        <span className="text-ink-200">·</span>
+        <span className="text-sm text-ink-400">{product.moq}+ {product.unit} (MOQ)</span>
       </div>
 
-      <div className="text-3xl sm:text-4xl font-bold text-apple-gray-900">
+      <div className="text-3xl sm:text-4xl font-bold text-ink-900">
         {formatPrice(product.price)}
-        <span className="text-base font-normal text-apple-gray-400"> / {product.unit}</span>
+        <span className="text-base font-normal text-ink-400"> / {product.unit}</span>
       </div>
 
-      <p className="text-sm text-apple-gray-500 leading-relaxed">{product.shortDescription}</p>
+      <p className="text-sm text-ink-500 leading-relaxed">{product.shortDescription}</p>
 
       <div className="flex flex-wrap gap-2">
         {product.tags.map((tag) => (
-          <span key={tag} className="px-3 py-1 text-xs bg-apple-gray-50 text-apple-gray-500 rounded-full">{tag}</span>
+          <span key={tag} className="px-3 py-1 text-xs bg-ink-50 text-ink-500 rounded-full">{tag}</span>
         ))}
       </div>
 
-      <div className="border-t border-apple-gray-100 pt-6 space-y-4">
+      <div className="border-t border-ink-100 pt-6 space-y-4">
         <div className="flex items-center gap-4">
           <div className="flex-1">
-            <p className="text-sm font-medium text-apple-gray-700 mb-2">Quantity ({product.unit})</p>
+            <p className="text-sm font-medium text-ink-700 mb-2">Quantity ({product.unit})</p>
             <div className="flex items-center gap-3">
               <button
                 onClick={() => setQuantity(Math.max(product.moq, quantity - product.moq))}
                 disabled={quantity <= product.moq}
-                className="w-10 h-10 rounded-[10px] border border-apple-gray-200 flex items-center justify-center hover:bg-apple-gray-50 disabled:opacity-40 apple-transition"
+                className="w-10 h-10 rounded-[10px] border border-ink-200 flex items-center justify-center hover:bg-ink-50 disabled:opacity-40 transition-smooth"
               >
-                <Minus size={16} className="text-apple-gray-500" />
+                <Minus size={16} className="text-ink-500" />
               </button>
               <div className="flex-1 max-w-[120px]">
                 <input
                   type="number"
                   value={quantity}
                   onChange={(e) => setQuantity(Math.max(product.moq, Number(e.target.value) || product.moq))}
-                  className="w-full text-center px-3 py-2 border border-apple-gray-200 rounded-[10px] text-sm font-medium text-apple-gray-900 focus:outline-none focus:ring-2 focus:ring-apple-blue/20 focus:border-apple-blue"
+                  className="w-full text-center px-3 py-2 border border-ink-200 rounded-[10px] text-sm font-medium text-ink-900 focus:outline-none focus:ring-2 focus:ring-brand-600/20 focus:border-brand-600"
                 />
               </div>
               <button
                 onClick={() => setQuantity(quantity + product.moq)}
-                className="w-10 h-10 rounded-[10px] border border-apple-gray-200 flex items-center justify-center hover:bg-apple-gray-50 apple-transition"
+                className="w-10 h-10 rounded-[10px] border border-ink-200 flex items-center justify-center hover:bg-ink-50 transition-smooth"
               >
-                <Plus size={16} className="text-apple-gray-500" />
+                <Plus size={16} className="text-ink-500" />
               </button>
             </div>
           </div>
           <div className="text-right">
-            <p className="text-sm text-apple-gray-400">Total</p>
-            <p className="text-xl font-bold text-apple-gray-900">{formatPrice(total)}</p>
+            <p className="text-sm text-ink-400">Total</p>
+            <p className="text-xl font-bold text-ink-900">{formatPrice(total)}</p>
           </div>
         </div>
 
@@ -109,20 +109,20 @@ export function ProductInfo({ product }: ProductInfoProps) {
         <button
           onClick={() => setIsWishlisted(!isWishlisted)}
           className={cn(
-            'flex items-center gap-2 px-4 py-2 rounded-[10px] text-sm apple-transition',
-            isWishlisted ? 'bg-red-50 text-red-600' : 'hover:bg-apple-gray-50 text-apple-gray-500'
+            'flex items-center gap-2 px-4 py-2 rounded-[10px] text-sm transition-smooth',
+            isWishlisted ? 'bg-red-50 text-red-600' : 'hover:bg-ink-50 text-ink-500'
           )}
         >
           <Heart size={16} className={isWishlisted ? 'fill-red-500 text-red-500' : ''} />
           {isWishlisted ? 'Saved' : 'Save to Wishlist'}
         </button>
-        <button className="flex items-center gap-2 px-4 py-2 rounded-[10px] text-sm text-apple-gray-500 hover:bg-apple-gray-50 apple-transition">
+        <button className="flex items-center gap-2 px-4 py-2 rounded-[10px] text-sm text-ink-500 hover:bg-ink-50 transition-smooth">
           <Share2 size={16} />
           Share
         </button>
       </div>
 
-      <div className="border-t border-apple-gray-100 pt-6 grid grid-cols-3 gap-4">
+      <div className="border-t border-ink-100 pt-6 grid grid-cols-3 gap-4">
         {[
           { icon: Shield, label: 'Trade Assurance', desc: 'Payment protection' },
           { icon: Truck, label: 'Free Shipping', desc: 'On orders over $5,000' },
@@ -131,9 +131,9 @@ export function ProductInfo({ product }: ProductInfoProps) {
           const Icon = item.icon;
           return (
             <div key={item.label} className="text-center">
-              <Icon size={20} className="mx-auto mb-2 text-apple-gray-400" />
-              <p className="text-xs font-medium text-apple-gray-700">{item.label}</p>
-              <p className="text-[10px] text-apple-gray-400">{item.desc}</p>
+              <Icon size={20} className="mx-auto mb-2 text-ink-400" />
+              <p className="text-xs font-medium text-ink-700">{item.label}</p>
+              <p className="text-[10px] text-ink-400">{item.desc}</p>
             </div>
           );
         })}
