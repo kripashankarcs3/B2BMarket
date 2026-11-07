@@ -22,8 +22,8 @@ export default function WishlistPage() {
             <div className="w-16 h-16 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
               <Heart size={28} className="text-red-300" />
             </div>
-            <h2 className="text-xl font-semibold text-apple-gray-900 mb-2">Your wishlist is empty</h2>
-            <p className="text-sm text-apple-gray-400 mb-6">Save your favorite products for later.</p>
+            <h2 className="text-xl font-semibold text-ink-900 mb-2">Your wishlist is empty</h2>
+            <p className="text-sm text-ink-400 mb-6">Save your favorite products for later.</p>
             <Link href="/products">
               <Button>Browse Products</Button>
             </Link>
@@ -42,8 +42,8 @@ export default function WishlistPage() {
           className="flex items-center justify-between mb-8"
         >
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-apple-gray-900">My Wishlist</h1>
-            <p className="text-sm text-apple-gray-400 mt-1">{items.length} saved items</p>
+            <h1 className="text-3xl sm:text-4xl font-bold text-ink-900">My Wishlist</h1>
+            <p className="text-sm text-ink-400 mt-1">{items.length} saved items</p>
           </div>
           {items.length > 0 && (
             <Button variant="ghost" size="sm">
@@ -63,7 +63,7 @@ export default function WishlistPage() {
             >
               <button
                 onClick={() => removeItem(product.id)}
-                className="absolute top-3 right-3 z-10 p-2 rounded-[8px] bg-white/80 backdrop-blur-sm border border-apple-gray-100 opacity-0 group-hover:opacity-100 apple-transition hover:bg-red-50 hover:text-red-400 text-apple-gray-400"
+                className="absolute top-3 right-3 z-10 p-2 rounded-[8px] bg-white/80 backdrop-blur-sm border border-ink-100 opacity-0 group-hover:opacity-100 transition-smooth hover:bg-red-50 hover:text-red-400 text-ink-400"
               >
                 <Trash2 size={14} />
               </button>

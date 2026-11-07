@@ -43,11 +43,8 @@ async function request<T>(
     body: body ? JSON.stringify(body) : undefined,
   });
 
-  console.log('🔍 [api-client] fetch response:', { path, status: response.status, ok: response.ok });
-
   if (!response.ok) {
     const errorBody = await response.json().catch(() => ({}));
-    console.log('🔍 [api-client] non-OK response body:', errorBody);
     throw new ApiError(
       errorBody.error || `Request failed with status ${response.status}`,
       response.status,
@@ -56,7 +53,6 @@ async function request<T>(
   }
 
   const json = await response.json();
-  console.log('🔍 [api-client] success response body keys:', Object.keys(json));
   return json;
 }
 

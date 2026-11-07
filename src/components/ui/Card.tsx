@@ -18,16 +18,16 @@ const paddingStyles = {
 };
 
 const variantStyles = {
-  default: 'bg-white border border-apple-gray-100 ios-shadow-sm',
-  glass: 'glass-card ios-shadow',
-  elevated: 'bg-white ios-shadow-lg',
+  default: 'bg-white border border-ink-100',
+  glass: 'glass-card elev',
+  elevated: 'bg-white border border-ink-100 elev',
 };
 
 const Card = ({ children, variant = 'default', padding = 'md', hover = false, className, ...props }: CardProps) => {
   return (
     <div
       className={cn(
-        'rounded-[16px] apple-transition',
+        'rounded-lg transition-smooth',
         variantStyles[variant],
         paddingStyles[padding],
         hover && 'hover-lift cursor-pointer',

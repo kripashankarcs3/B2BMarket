@@ -19,7 +19,7 @@ export function RelatedProducts({ currentProductId, categoryId }: RelatedProduct
 
   return (
     <div>
-      <h3 className="text-xl font-bold text-apple-gray-900 mb-6">Related Products</h3>
+      <h3 className="text-xl font-bold text-ink-900 mb-6">Related Products</h3>
       <motion.div
         initial="hidden"
         whileInView="visible"

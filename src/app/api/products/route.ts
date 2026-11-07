@@ -30,7 +30,13 @@ export async function GET(request: NextRequest) {
     }
 
     if (category) {
-      prismaWhere.categoryId = category;
+      // Accept an id or a slug; a parent category also matches its subcategories.
+      const match = await prisma.category.findFirst({
+        where: { OR: [{ id: category }, { slug: category }] },
+        select: { id: true, children: { select: { id: true } } },
+      });
+      const ids = match ? [match.id, ...match.children.map((c) => c.id)] : [category];
+      prismaWhere.categoryId = { in: ids };
     }
 
     if (categories) {

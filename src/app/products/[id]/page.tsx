@@ -14,14 +14,12 @@ export default function ProductDetailPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = use(params);
-  console.log('🔍 [ProductDetailPage] id from use(params):', JSON.stringify(id), 'type:', typeof id);
   const { data: product, isLoading, isError, error } = useProduct(id);
-  console.log('🔍 [ProductDetailPage] query state:', { isLoading, isError, error: error?.message, hasData: !!product });
 
   if (isLoading) {
     return (
       <div className="pt-28 pb-16 flex items-center justify-center">
-        <div className="w-6 h-6 border-2 border-apple-blue border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -43,14 +41,14 @@ export default function ProductDetailPage({
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <nav className="flex items-center gap-2 text-sm text-apple-gray-400 mb-6">
-            <Link href="/" className="hover:text-apple-blue">Home</Link>
+          <nav className="flex items-center gap-2 text-sm text-ink-400 mb-6">
+            <Link href="/" className="hover:text-brand-600">Home</Link>
             <span>/</span>
-            <Link href="/products" className="hover:text-apple-blue">Products</Link>
+            <Link href="/products" className="hover:text-brand-600">Products</Link>
             <span>/</span>
-            <Link href={`/products?category=${product.category.slug}`} className="hover:text-apple-blue">{product.category.name}</Link>
-            <span className="text-apple-gray-300">/</span>
-            <span className="text-apple-gray-600 truncate">{product.name}</span>
+            <Link href={`/products?category=${product.category.slug}`} className="hover:text-brand-600">{product.category.name}</Link>
+            <span className="text-ink-300">/</span>
+            <span className="text-ink-600 truncate">{product.name}</span>
           </nav>
         </motion.div>
 
@@ -79,8 +77,8 @@ export default function ProductDetailPage({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-base font-semibold text-apple-gray-900 mb-3">Description</h3>
-              <p className="text-sm text-apple-gray-500 leading-relaxed">{product.description}</p>
+              <h3 className="text-base font-semibold text-ink-900 mb-3">Description</h3>
+              <p className="text-sm text-ink-500 leading-relaxed">{product.description}</p>
             </motion.div>
 
             <motion.div
@@ -106,35 +104,35 @@ export default function ProductDetailPage({
             viewport={{ once: true }}
           >
             <div className="sticky top-24 space-y-4">
-              <div className="p-6 bg-white border border-apple-gray-100 rounded-[20px] ios-shadow-sm">
+              <div className="p-6 bg-white border border-ink-100 rounded-[20px] elev-sm">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-14 h-14 rounded-[14px] overflow-hidden bg-apple-gray-50 border border-apple-gray-100">
+                  <div className="w-14 h-14 rounded-[14px] overflow-hidden bg-ink-50 border border-ink-100">
                     <img src={supplier.logo} alt="" className="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <Link href={`/suppliers/${supplier.id}`} className="text-sm font-semibold text-apple-gray-900 hover:text-apple-blue apple-transition">
+                    <Link href={`/suppliers/${supplier.id}`} className="text-sm font-semibold text-ink-900 hover:text-brand-600 transition-smooth">
                       {supplier.name}
                     </Link>
                     <div className="flex items-center gap-2 mt-0.5">
                       <div className="flex items-center gap-0.5">
                         <Star size={12} className="fill-amber-400 text-amber-400" />
-                        <span className="text-xs font-medium text-apple-gray-600">{supplier.rating}</span>
+                        <span className="text-xs font-medium text-ink-600">{supplier.rating}</span>
                       </div>
-                      <span className="text-xs text-apple-gray-400">({supplier.reviewCount})</span>
+                      <span className="text-xs text-ink-400">({supplier.reviewCount})</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="space-y-3 mb-4">
-                  <div className="flex items-center gap-2.5 text-sm text-apple-gray-500">
-                    <MapPin size={15} className="shrink-0 text-apple-gray-400" />
+                  <div className="flex items-center gap-2.5 text-sm text-ink-500">
+                    <MapPin size={15} className="shrink-0 text-ink-400" />
                     {supplier.location}
                   </div>
-                  <div className="flex items-center gap-2.5 text-sm text-apple-gray-500">
-                    <Clock size={15} className="shrink-0 text-apple-gray-400" />
+                  <div className="flex items-center gap-2.5 text-sm text-ink-500">
+                    <Clock size={15} className="shrink-0 text-ink-400" />
                     Response: {supplier.responseTime}
                   </div>
-                  <div className="flex items-center gap-2.5 text-sm text-apple-gray-500">
+                  <div className="flex items-center gap-2.5 text-sm text-ink-500">
                     <Shield size={15} className="shrink-0 text-emerald-500" />
                     {supplier.verified ? 'Verified Supplier' : 'Unverified'}
                   </div>

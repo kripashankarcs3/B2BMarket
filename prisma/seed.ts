@@ -1,3 +1,5 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import { PrismaClient } from '../src/generated/prisma/client.js';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { SeededRng, slugify, generateGstNumber, generateHsnCode, generatePhone, generatePincode, INDIAN_FIRST_NAMES, INDIAN_LAST_NAMES } from './seed/helpers';
@@ -25,8 +27,8 @@ const CITY_CLUSTERS: Record<string, { slugs: string[]; desc: string; estYearRang
   Jaipur: { slugs: ['home-decor', 'imitation-jewelry', 'silver-jewelry', 'bridal-jewelry', 'pearl-jewelry', 'cotton-fabrics', 'blue-pottery'], desc: 'Blue pottery, gemstone and textile hub', estYearRange: [1992, 2014] },
   Mumbai: { slugs: ['cosmetics', 'pharmaceuticals', 'healthcare', 'ayurvedic', 'beauty', 'packaging', 'industrial-chemicals'], desc: 'Financial and pharmaceutical capital', estYearRange: [1980, 2008] },
   Delhi: { slugs: ['electronics', 'home-appliances', 'stationery', 'office-supplies', 'sports', 'fitness', 'home-decor', 'kitchen-storage'], desc: 'National capital commercial and wholesale hub', estYearRange: [1985, 2015] },
-  Ahmedabad: { slugs: ['industrial-chemicals', 'dyes-pigments', 'paints-coatings', 'adhesives-sealants', 'construction', 'textile-machinery'], desc: 'Chemical and textile manufacturing hub', estYearRange: [1982, 2012] },
-  Bengaluru: { slugs: ['electronics', 'computer-peripherals', 'electrical-components', 'industrial-machinery', 'food-processing'], desc: 'Electronics and industrial manufacturing hub', estYearRange: [1992, 2016] },
+  Ahmedabad: { slugs: ['industrial-chemicals', 'dyes-pigments', 'paints-coatings', 'adhesives-sealants', 'construction', 'textile-machinery', 'pipes-fittings', 'cotton-fabrics'], desc: 'Chemical and textile manufacturing hub', estYearRange: [1982, 2012] },
+  Bengaluru: { slugs: ['electronics', 'computer-peripherals', 'electrical-components', 'industrial-machinery', 'food-processing', 'led-lights'], desc: 'Electronics and industrial manufacturing hub', estYearRange: [1992, 2016] },
   Chennai: { slugs: ['automotive', 'car-parts', 'auto-electrical', 'tires', 'steel-iron', 'industrial-machinery'], desc: 'Automotive manufacturing capital of India', estYearRange: [1988, 2010] },
   Hyderabad: { slugs: ['pharmaceuticals', 'healthcare', 'medical-equipment', 'ayurvedic', 'electronics', 'computer-peripherals'], desc: 'Pharmaceutical and IT hub', estYearRange: [1995, 2015] },
   Kolkata: { slugs: ['tea-coffee', 'jute-products', 'leather-bags', 'stationery', 'office-supplies', 'confectionery', 'spices-masala'], desc: 'Tea, jute and heritage manufacturing hub', estYearRange: [1980, 2005] },
@@ -81,7 +83,48 @@ const COMPANY_NAMES = [
   { name: 'Konark Food & Beverages', suffix: 'Pvt. Ltd.', vibe: 'food' },
   { name: 'Kalinga Steel Tubes', suffix: 'Ltd.', vibe: 'metal' },
   { name: 'Himalaya Health Products', suffix: 'Pvt. Ltd.', vibe: 'health' },
+  { name: 'Jaipur Gems & Jewels', suffix: 'Exports', vibe: 'jewelry' },
+  { name: 'Navratna Fashion Jewellery', suffix: 'Pvt. Ltd.', vibe: 'jewelry' },
+  { name: 'Arogya Medi Devices', suffix: 'Pvt. Ltd.', vibe: 'medical' },
+  { name: 'Sheesham Furniture Craft', suffix: 'Ltd.', vibe: 'wood' },
+  { name: 'Kaveri Lighting Solutions', suffix: 'Pvt. Ltd.', vibe: 'electrical' },
 ];
+
+// Which company vibes can credibly sell each product category
+const CATEGORY_VIBES: Record<string, string[]> = {
+  'led-lights': ['electrical', 'electronics'], 'mobile-accessories': ['electronics'], 'home-appliances': ['electronics'],
+  'electrical-components': ['electrical'], 'fans': ['electrical', 'electronics'], 'solar-products': ['electrical'],
+  'mens-ethnic-wear': ['textile'], 'womens-ethnic-wear': ['textile'], 'mens-casual-wear': ['textile'], 'womens-casual-wear': ['textile'],
+  'kids-wear': ['textile'], 'bed-linen': ['textile'], 'cotton-fabrics': ['textile'],
+  'kitchen-storage': ['plastic', 'metal', 'general'], 'cookware': ['metal', 'general'], 'tableware': ['ceramic', 'handicraft'],
+  'gym-equipment': ['sports'], 'cement': ['construction'], 'steel-iron': ['metal'], 'tiles': ['ceramic', 'construction'],
+  'pipes-fittings': ['plastic', 'metal'], 'paints-construction': ['chemical', 'construction'], 'sanitaryware': ['ceramic'],
+  'hardware': ['engineering', 'metal'], 'corrugated-boxes': ['packaging', 'paper'], 'office-furniture': ['wood'],
+  'living-room-furniture': ['wood'], 'notebooks-diaries': ['paper'], 'writing-instruments': ['paper', 'general'],
+  'hair-care': ['health', 'chemical'], 'skin-care': ['health'], 'footwear': ['leather'], 'leather-bags': ['leather'],
+  'snacks-namkeen': ['food'], 'spices-masala': ['food', 'agriculture'], 'rice-grains': ['agriculture', 'food'],
+  'tea-coffee': ['food', 'agriculture'], 'dry-fruits': ['agriculture', 'food'], 'medical-equipment': ['medical'],
+  'ayurvedic': ['health', 'pharma'], 'corporate-gifts': ['trading', 'export'], 'plastic-molded': ['plastic'],
+  'imitation-jewelry': ['jewelry', 'handicraft'], 'safety-gear': ['engineering', 'industrial'], 'car-parts': ['automotive'],
+};
+
+const LOGO_COLORS = ['#1e3a8a', '#0f766e', '#9a3412', '#6b21a8', '#be123c', '#065f46', '#92400e', '#1d4ed8', '#334155'];
+
+// Initials badge as an inline SVG, so supplier logos never show unrelated stock photos
+function logoFor(companyName: string, index: number): string {
+  const initials = companyName.split(' ').filter(w => /^[A-Z]/.test(w)).slice(0, 2).map(w => w[0]).join('');
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><rect width='200' height='200' fill='${LOGO_COLORS[index % LOGO_COLORS.length]}'/><text x='100' y='100' dy='.35em' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-size='84' font-weight='700' fill='#fff'>${initials}</text></svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
+// Real photos per product template live in public/products/<template-slug>/ (see credits.json there)
+const PRODUCT_IMAGE_DIR = path.join(process.cwd(), 'public', 'products');
+function imagesFor(productName: string): string[] {
+  const slug = slugify(productName);
+  const dir = path.join(PRODUCT_IMAGE_DIR, slug);
+  if (!fs.existsSync(dir)) return [];
+  return fs.readdirSync(dir).filter(f => /\.(jpe?g|png|webp)$/i.test(f)).sort().map(f => `/products/${slug}/${f}`);
+}
 
 // ─── FOUNDER PROFILES ─────────────────────────────────────
 const FOUNDERS = [
@@ -409,6 +452,7 @@ async function main() {
   const supplierCities: Record<string, string> = {};
   const allProductIds: string[] = [];
   const productSupplierMap: Record<string, string> = {};
+  const nameCounters: Record<string, number> = {};
 
 const STATE_MAP: { [key: string]: string } = {
   'Agra': 'Uttar Pradesh', 'Ahmedabad': 'Gujarat', 'Amritsar': 'Punjab',
@@ -430,8 +474,13 @@ const STATE_MAP: { [key: string]: string } = {
     const personaLity = SUPPLIER_PERSONALITIES[si % SUPPLIER_PERSONALITIES.length];
     const factoryAmenities = pickN(FACTORY_AMENITIES, 2, 4).join(', ');
 
-    // Pick company profile
-    const profile = COMPANY_NAMES[si % COMPANY_NAMES.length];
+    // Primary category rotates through the city's clusters; company name must fit it
+    const eligibleCats = cluster.slugs.filter(s => catMap[s] && CATEGORY_PRODUCTS[s]);
+    const primaryCat = eligibleCats[Math.floor(si / citySlugs.length) % eligibleCats.length];
+    const vibes = CATEGORY_VIBES[primaryCat] || ['general', 'trading', 'export'];
+    const matchingProfiles = COMPANY_NAMES.filter(c => vibes.includes(c.vibe));
+    const vibeKey = vibes.join('|');
+    const profile = matchingProfiles[(nameCounters[vibeKey] = (nameCounters[vibeKey] ?? -1) + 1) % matchingProfiles.length];
     const companyName = `${profile.name} ${profile.suffix}`;
     const slug = slugify(companyName) + '-' + si;
     const founder = FOUNDERS[si % FOUNDERS.length];
@@ -460,8 +509,8 @@ const STATE_MAP: { [key: string]: string } = {
         userId: supUser.id,
         companyName,
         slug,
-        logo: `https://picsum.photos/seed/${slug}-logo/200/200`,
-        coverImage: `https://picsum.photos/seed/${slug}-cover/1200/400`,
+        logo: logoFor(companyName, si),
+        coverImage: null,
         description: `${companyName} is a ${personaLity.type.toLowerCase()} — ${personaLity.focus}. Based in ${city}, ${supplierState} (${cluster.desc}). Founded in ${estYear} by ${founder.first} ${founder.last}, the company has grown into ${personaLity.factory} employing ${employees} people. ${personaLity.pitch} ${personaLity.exports} (${personaLity.export_pct} of revenue). Infrastructure includes ${factoryAmenities}.`,
         yearEstablished: estYear,
         employeeCount: employees,
@@ -488,7 +537,7 @@ const STATE_MAP: { [key: string]: string } = {
     }
 
     // ─── PRODUCTS ────────────────────────────────────────
-    const supplierCatSlugs = cluster.slugs.filter(s => catMap[s]).slice(0, 2);
+    const supplierCatSlugs = [primaryCat, ...eligibleCats.filter(s => s !== primaryCat && CATEGORY_VIBES[s]?.includes(profile.vibe))].slice(0, 2);
     const productsPerCat = rng.int(5, 15);
     let prodCount = 0;
 
@@ -556,11 +605,11 @@ const STATE_MAP: { [key: string]: string } = {
         }
 
         // Product images
-        const imgCount = rng.int(3, 6);
-        for (let imgIdx = 0; imgIdx < imgCount; imgIdx++) {
+        const imageUrls = imagesFor(productName);
+        for (let imgIdx = 0; imgIdx < imageUrls.length; imgIdx++) {
           const imgType = PRODUCT_IMAGE_TYPES[imgIdx % PRODUCT_IMAGE_TYPES.length];
           await prisma.productImage.create({
-            data: { productId: product.id, url: `https://picsum.photos/seed/${productSlug}-${imgType.suffix}/600/600`, alt: `${productName} - ${imgType.label} (${imgType.desc})`, order: imgIdx },
+            data: { productId: product.id, url: imageUrls[imgIdx], alt: `${productName} - ${imgType.label}`, order: imgIdx },
           });
         }
       }
